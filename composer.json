@@ -1,0 +1,27 @@
+{
+    "name": "hungthai1401/laravel-sql-logger",
+    "description": "Log SQL queries in Laravel/Lumen framework",
+    "authors": [
+        {
+            "name": "Nguyen Hung Thai",
+            "email": "hungthai1401.it@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "laravel/framework": "^5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "HT\\LaravelSqlLogger\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HT\\LaravelSqlLogger\\Providers\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
