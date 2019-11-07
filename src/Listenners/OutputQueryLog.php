@@ -37,7 +37,17 @@ class OutputQueryLog
         $query = str_replace(array('%', '?', "\r", "\n", "\t"), array('%%', '%s', ' ', ' ', ' '), $event->sql);
         $query = preg_replace('/\s+/uD', ' ', $query);
         $query = vsprintf($query, $bindings).';';
-
         app('log')->driver('sqllog')->debug($query, compact('time'));
+        if (!config('logging.channels.slow_query_log.enabled')) {
+            return;
+        }
+
+        $log_queries_slower_than = (float) config('logging.channels.slow_query_log.time_to_log', -1);
+        if ($log_queries_slower_than < 0 || $time < ($log_queries_slower_than * 1000)) {
+            return;
+        }
+
+        $level = config('logging.channels.slow_query_log.log_level', 'debug');
+        app('log')->driver('slow_query_log')->log($level, $query, compact('time'));
     }
 }

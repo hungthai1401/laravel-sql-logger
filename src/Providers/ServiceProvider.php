@@ -4,6 +4,10 @@ namespace HT\LaravelSqlLogger\Providers;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
+/**
+ * Provider: ServiceProvider
+ * @package HT\LaravelSqlLogger\Providers
+ */
 class ServiceProvider extends BaseServiceProvider
 {
     /**
