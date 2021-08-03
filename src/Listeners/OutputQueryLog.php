@@ -9,7 +9,7 @@ use Illuminate\Database\Events\QueryExecuted;
 /**
  * Output Query Log
  *
- * @package App\Listeners
+ * @package HT\LaravelSqlLogger\Listeners
  */
 class OutputQueryLog
 {
@@ -34,11 +34,11 @@ class OutputQueryLog
                 $bindings[$i] = 'null';
             }
         }
-        $query = str_replace(array('%', '?', "\r", "\n", "\t"), array('%%', '%s', ' ', ' ', ' '), $event->sql);
+        $query = str_replace(['%', '?', "\r", "\n", "\t"], ['%%', '%s', ' ', ' ', ' '], $event->sql);
         $query = preg_replace('/\s+/uD', ' ', $query);
         $query = vsprintf($query, $bindings).';';
         app('log')->driver('sqllog')->debug($query, compact('time'));
-        if (!config('logging.channels.slow_query_log.enabled')) {
+        if (! config('logging.channels.slow_query_log.enabled')) {
             return;
         }
 
