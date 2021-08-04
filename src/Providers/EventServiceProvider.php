@@ -24,9 +24,6 @@ class EventServiceProvider extends ServiceProvider
         \Illuminate\Database\Events\TransactionRolledBack::class => [
             \HT\LaravelSqlLogger\Listeners\OutputTransactionLog::class,
         ],
-        \Illuminate\Foundation\Http\Events\RequestHandled::class => [
-            \HT\LaravelSqlLogger\Listeners\OutputResponseLog::class,
-        ],
     ];
 
     /**
