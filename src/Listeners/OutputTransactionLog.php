@@ -3,6 +3,9 @@
 namespace HT\LaravelSqlLogger\Listeners;
 
 use Illuminate\Database\Events\ConnectionEvent;
+use Illuminate\Database\Events\TransactionBeginning;
+use Illuminate\Database\Events\TransactionCommitted;
+use Illuminate\Database\Events\TransactionRolledBack;
 
 /**
  * Output Transaction Log
@@ -15,17 +18,14 @@ class OutputTransactionLog
      * Handle the event.
      *
      * @param ConnectionEvent $event
-     * @internal param $query
-     * @internal param $bindings
-     * @internal param $time
      */
     public function handle(ConnectionEvent $event): void
     {
-        if ($event instanceof \Illuminate\Database\Events\TransactionBeginning) {
+        if ($event instanceof TransactionBeginning) {
             $query = 'start transaction';
-        } else if ($event instanceof \Illuminate\Database\Events\TransactionCommitted) {
+        } elseif ($event instanceof TransactionCommitted) {
             $query = 'commit';
-        } else if ($event instanceof \Illuminate\Database\Events\TransactionRolledBack) {
+        } elseif ($event instanceof TransactionRolledBack) {
             $query = 'rollback';
         } else {
             $query = get_class($event);
