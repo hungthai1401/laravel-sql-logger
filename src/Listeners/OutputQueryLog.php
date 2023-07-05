@@ -2,8 +2,8 @@
 
 namespace HT\LaravelSqlLogger\Listeners;
 
+use DateTimeInterface;
 use DB;
-use DateTime;
 use Illuminate\Database\Events\QueryExecuted;
 
 /**
@@ -17,16 +17,13 @@ class OutputQueryLog
      * Handle the event.
      *
      * @param QueryExecuted $event
-     * @internal param $query
-     * @internal param $bindings
-     * @internal param $time
      */
     public function handle(QueryExecuted $event): void
     {
         $time = $event->time;
         $bindings = $event->bindings;
         foreach ($bindings as $i => $binding) {
-            if ($binding instanceof DateTime) {
+            if ($binding instanceof DateTimeInterface) {
                 $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
             } elseif (is_string($binding)) {
                 $bindings[$i] = DB::getPdo()->quote($binding);
@@ -36,7 +33,7 @@ class OutputQueryLog
         }
         $query = str_replace(['%', '?', "\r", "\n", "\t"], ['%%', '%s', ' ', ' ', ' '], $event->sql);
         $query = preg_replace('/\s+/uD', ' ', $query);
-        $query = vsprintf($query, $bindings).';';
+        $query = vsprintf($query, $bindings) . ';';
         app('log')->driver('sqllog')->debug($query, compact('time'));
         if (! config('logging.channels.slow_query_log.enabled')) {
             return;
