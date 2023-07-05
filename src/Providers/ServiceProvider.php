@@ -18,7 +18,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/logging.php',
+            __DIR__ . '/../Config/logging.php',
             'logging.channels'
         );
     }

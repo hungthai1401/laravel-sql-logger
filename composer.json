@@ -8,7 +8,8 @@
         }
     ],
     "require-dev": {
-        "laravel/framework": "^5.8"
+        "laravel/framework": "> 5.8",
+        "friendsofphp/php-cs-fixer": "^3.20"
     },
     "autoload": {
         "psr-4": {
@@ -21,6 +22,10 @@
                 "HT\\LaravelSqlLogger\\Providers\\ServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "lint": "vendor/bin/php-cs-fixer fix --dry-run",
+        "lint:fix": "vendor/bin/php-cs-fixer fix --verbose"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

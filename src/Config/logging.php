@@ -23,6 +23,6 @@ return [
         /**
          * log all sql queries that are slower than X seconds
          */
-        'time_to_log' => env('SLOW_QUERY_TIME_TO_LOG', -1)
-    ]
+        'time_to_log' => env('SLOW_QUERY_TIME_TO_LOG', -1),
+    ],
 ];

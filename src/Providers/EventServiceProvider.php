@@ -2,6 +2,12 @@
 
 namespace HT\LaravelSqlLogger\Providers;
 
+use HT\LaravelSqlLogger\Listeners\OutputQueryLog;
+use HT\LaravelSqlLogger\Listeners\OutputTransactionLog;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Database\Events\TransactionBeginning;
+use Illuminate\Database\Events\TransactionCommitted;
+use Illuminate\Database\Events\TransactionRolledBack;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -12,17 +18,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \Illuminate\Database\Events\QueryExecuted::class => [
-            \HT\LaravelSqlLogger\Listeners\OutputQueryLog::class,
+        QueryExecuted::class => [
+            OutputQueryLog::class,
         ],
-        \Illuminate\Database\Events\TransactionBeginning::class => [
-            \HT\LaravelSqlLogger\Listeners\OutputTransactionLog::class,
+        TransactionBeginning::class => [
+            OutputTransactionLog::class,
         ],
-        \Illuminate\Database\Events\TransactionCommitted::class => [
-            \HT\LaravelSqlLogger\Listeners\OutputTransactionLog::class,
+        TransactionCommitted::class => [
+            OutputTransactionLog::class,
         ],
-        \Illuminate\Database\Events\TransactionRolledBack::class => [
-            \HT\LaravelSqlLogger\Listeners\OutputTransactionLog::class,
+        TransactionRolledBack::class => [
+            OutputTransactionLog::class,
         ],
     ];
 
