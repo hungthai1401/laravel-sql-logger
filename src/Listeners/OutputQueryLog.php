@@ -27,6 +27,8 @@ class OutputQueryLog
                 $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
             } elseif (is_string($binding)) {
                 $bindings[$i] = DB::getPdo()->quote($binding);
+            } elseif (is_bool($binding)) {
+                $bindings[$i] = $binding ? '1' : '0';
             } elseif (null === $binding) {
                 $bindings[$i] = 'null';
             }
