@@ -3,7 +3,6 @@
 namespace HT\LaravelSqlLogger\Listeners;
 
 use DateTimeInterface;
-use DB;
 use Illuminate\Database\Events\QueryExecuted;
 
 /**
@@ -26,7 +25,7 @@ class OutputQueryLog
             if ($binding instanceof DateTimeInterface) {
                 $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
             } elseif (is_string($binding)) {
-                $bindings[$i] = DB::getPdo()->quote($binding);
+                $bindings[$i] = $event->connection->getPdo()->quote($binding);
             } elseif (is_bool($binding)) {
                 $bindings[$i] = $binding ? '1' : '0';
             } elseif (null === $binding) {
